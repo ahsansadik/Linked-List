@@ -17,7 +17,7 @@ void printList(struct Node *p)
     printf("\n");
 }
 
-void insertAtPosition(struct Node **head, int data, int position)
+void insertAtPosition(struct Node *head, int data, int position)
 {
     struct Node *newNode = malloc(sizeof(struct Node));
     newNode->data = data;
@@ -25,11 +25,11 @@ void insertAtPosition(struct Node **head, int data, int position)
     if (position == 0)
     {
         newNode->next = *head;
-        *head = newNode;
-        return;
+        head = newNode;
+        return head;
     }
 
-    struct Node *temp = *head;
+    struct Node *temp = head;
     for (int i = 0; temp != NULL && i < position - 1 ; i++)
     {
         temp = temp->next;
@@ -39,11 +39,12 @@ void insertAtPosition(struct Node **head, int data, int position)
     {
         printf("Position out of bounds\n");
         free(newNode);
-        return;
+        return head;
     }
 
     newNode->next = temp->next;
     temp->next = newNode;
+    return head;
 }
 
 int main()
@@ -73,7 +74,7 @@ int main()
     printf("Enter data and position to insert: ");
     scanf("%d %d", &data, &position);
 
-    insertAtPosition(&head, data, position);
+    head = insertAtPosition(&head, data, position);
 
     printList(head);
 
