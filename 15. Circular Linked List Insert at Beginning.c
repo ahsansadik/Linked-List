@@ -22,8 +22,8 @@ void printList(struct Node* head)
         temp = temp->next;
     }
      printf("%d (head)\n",temp -> data);
-} printf("\n");
 }
+
 
 struct Node* insertAtBeginning(struct Node *head, int newData)
 {
