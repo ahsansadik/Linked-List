@@ -26,21 +26,6 @@ void printList(struct Node* head)
     printf("NULL\n");
 }
 
-struct Node* insertAtBeginning(struct Node* head, int newData)
-{
-    struct Node* newNode = malloc(sizeof(struct Node));
-
-    newNode->data = newData;
-    newNode->next = head;
-    newNode->prev = NULL;
-
-    if (head != NULL)
-    {
-        head->prev = newNode;
-    }
-
-    return newNode;
-}
 
 int main()
 {
@@ -70,7 +55,13 @@ int main()
     printf("Original List: ");
     printList(head);
 
-    head = insertAtBeginning(head, 0);
+    struct Node* newNode = malloc(sizeof(struct Node));
+
+    newNode->data = 0;
+    newNode->next = head;
+    newNode->prev = NULL;
+    head->prev=newNode;
+    head = newNode;
 
     printf("Updated List: ");
     printList(head);
