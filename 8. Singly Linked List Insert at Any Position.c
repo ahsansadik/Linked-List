@@ -1,81 +1,80 @@
-#include <stdio.h>
-#include <stdlib.h>
+#include<stdio.h>
+#include<stdlib.h>
 
-struct Node
-{
+struct node {
+
     int data;
-    struct Node *next;
+    struct node *next;
+    struct node *prev;
+
 };
 
-void printList(struct Node *p)
-{
-    while (p != NULL)
+void printList(struct node *head){
+    if(head == NULL)
     {
-        printf("%d ", p->data);
-        p = p->next;
+        printf("Linked List is Empty\n");
+    }
+
+    while(head != NULL)
+    {
+        printf("%d ", head -> data);
+        head = head -> next;
     }
     printf("\n");
 }
 
-void insertAtPosition(struct Node *head, int data, int position)
+struct node *insertAtAnyPosition(struct node *head, int data, int position)
 {
-    struct Node *newNode = malloc(sizeof(struct Node));
-    newNode->data = data;
+    struct node *newNode = malloc(sizeof(struct node));
+    newNode -> data = data;
 
-    if (position == 0)
+    if(position == 1)
     {
-        newNode->next = *head;
+        newNode -> next = head;
         head = newNode;
         return head;
     }
 
-    struct Node *temp = head;
-    for (int i = 0; temp != NULL && i < position - 1 ; i++)
+    struct node *temp = head;
+
+    for (int i = 1; temp != NULL && i < position - 1 ; i++)
     {
-        temp = temp->next;
+        temp = temp -> next;
     }
 
     if (temp == NULL)
     {
-        printf("Position out of bounds\n");
+        printf("out of bound\n");
         free(newNode);
         return head;
     }
 
-    newNode->next = temp->next;
-    temp->next = newNode;
+    newNode -> next = temp -> next;
+    temp -> next = newNode;
+
     return head;
 }
 
 int main()
 {
-    struct Node *head = NULL;
-    struct Node *one = NULL;
-    struct Node *two = NULL;
-    struct Node *three = NULL;
-
-    one = malloc(sizeof(struct Node));
-    two = malloc(sizeof(struct Node));
-    three = malloc(sizeof(struct Node));
-
-    one->data = 1;
-    two->data = 2;
-    three->data = 3;
+    struct node *head;
+    struct node *one = malloc(sizeof(struct node));
+    struct node *two = malloc(sizeof(struct node));
+    struct node *three = malloc(sizeof(struct node));
 
     head = one;
 
-    one->next = two;
-    two->next = three;
-    three->next = NULL;
+    one -> data = 1;
+    one -> next = two;
+
+    two -> data = 2;
+    two -> next = three;
+
+    three -> data = 3;
+    three -> next = NULL;
 
     printList(head);
-
-    int data, position;
-    printf("Enter data and position to insert: ");
-    scanf("%d %d", &data, &position);
-
-    head = insertAtPosition(&head, data, position);
-
+    head = insertAtAnyPosition(head, 0, 4);
     printList(head);
 
     return 0;
