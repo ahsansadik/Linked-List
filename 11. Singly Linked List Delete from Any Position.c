@@ -1,79 +1,84 @@
-#include <stdio.h>
-#include <stdlib.h>
+#include<stdio.h>
+#include<stdlib.h>
 
-struct Node
-{
+struct node {
+
     int data;
-    struct Node *next;
+    struct node *next;
+
 };
 
-void printList(struct Node *p)
-{
-    while (p != NULL)
+void printList(struct node *head){
+    if(head == NULL)
     {
-        printf("%d ", p->data);
-        p = p->next;
+        printf("Linked List is Empty\n");
+    }
+
+    while(head != NULL)
+    {
+        printf("%d ", head -> data);
+        head = head -> next;
     }
     printf("\n");
 }
 
-void deleteFromPosition(struct Node *head, int position)
+
+struct node *deleteFromAnyPosition(struct node *head, int position)
 {
     if (head == NULL)
     {
         printf("List is empty\n");
         return;
     }
-    struct Node *temp = head;
-    if (position == 0)
+
+    struct node *temp = head;
+
+    if (position == 1)
     {
         head = temp->next;
         free(temp);
-        return;
+        return head;
     }
-    for (int i = 0; temp != NULL && i < position - 1; i++)
+    for (int i = 1; temp != NULL && i < position - 1; i++)
     {
         temp = temp->next;
     }
     if (temp == NULL || temp->next == NULL)
     {
         printf("Position out of bounds\n");
-        return;
+        return head;
     }
-    struct Node *next = temp->next->next;
+
+    struct node *next = temp->next->next;
     free(temp->next);
     temp->next = next;
+    return head;
 }
+
 
 int main()
 {
-    struct Node *head = NULL;
-    struct Node *one = NULL;
-    struct Node *two = NULL;
-    struct Node *three = NULL;
-
-    one = malloc(sizeof(struct Node));
-    two = malloc(sizeof(struct Node));
-    three = malloc(sizeof(struct Node));
-
-    one->data = 1;
-    two->data = 2;
-    three->data = 3;
+    struct node *head;
+    struct node *one = malloc(sizeof(struct node));
+    struct node *two = malloc(sizeof(struct node));
+    struct node *three = malloc(sizeof(struct node));
 
     head = one;
 
-    one->next = two;
-    two->next = three;
-    three->next = NULL;
+    one -> data = 1;
+    one -> next = two;
+
+    two -> data = 2;
+    two -> next = three;
+
+    three -> data = 3;
+    three -> next = NULL;
 
     printList(head);
 
-    int position;
-    printf("Enter position to delete: ");
-    scanf("%d", &position);
-
-    deleteFromPosition(head, position);
+    head = deleteFromAnyPosition(head, 2);
     printList(head);
 
     return 0;
 }
+
